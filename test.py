@@ -1,21 +1,24 @@
-from KB.manager import getRules, getFacts,getContraryPairs
+from KB.manager import getRules, getFacts, getContraryPairs, getAssumption
 from pyswip import Prolog
 from abaFramework import ABAFramework
+from anytree import Node, RenderTree
 
 prolog = Prolog()
-prolog.consult("./KB/Resources/assumptions.pl")
-assumptions = getFacts(prolog, "assumptions")
+# prolog.consult("./KB/Resources/assumptions.pl")
+prolog.consult("./KB/Resources/example1/assumptions.pl")
+assumptions = getAssumption(prolog, "ex1Assumptions")
 
-prolog.consult("./KB/Resources/rules.pl")
+prolog.consult("./KB/Resources/example1/rules.pl")
 
-rules = getRules(prolog, "mod1")
-facts = getFacts(prolog, "mod1")
+rules = getRules(prolog, "ex1rules")
+facts = getFacts(prolog, "ex1rules")
 
-rulesUFacts = rules.union(facts)
+rules.update(facts)
 
-prolog.consult("./KB/Resources/contraries.pl")
-contrariesList = getFacts(prolog, "contraries")
 
-contraries = (getContraryPairs(prolog, contrariesList))
+prolog.consult("./KB/Resources/example1/contraries.pl")
+contrariesList = getFacts(prolog, "ex1Contraries")
 
-aba1 = ABAFramework(rulesUFacts, assumptions, contraries)
+contraries = getContraryPairs(prolog, contrariesList)
+
+aba1 = ABAFramework(rules, assumptions, contraries)

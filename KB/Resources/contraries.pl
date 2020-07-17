@@ -1,3 +1,3 @@
 :- module(contraries, [contrary/2]).
 
-contrary(fly(tweety), notFly(tweety)).
+contrary(not(not_fly(tweety)), not_fly(tweety)).

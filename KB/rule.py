@@ -4,14 +4,21 @@ class Rule:
     class Type(Enum):
         RULE = "rule"
         FACT = "fact"
+        ASSUMPTION = "assumption"
     
-    def __init__(self, head:str, body=None):
+    def __init__(self, head:str, body=None, assumption:bool=False):
 
         if not body:
-            self.type = Rule.Type.FACT
-            self.head = head
-            self.body = set()
-            self.body.add(True)
+            if not assumption:
+                self.type = Rule.Type.FACT
+                self.head = head
+                self.body = set()
+                self.body.add(True)
+            else:
+                self.type = Rule.Type.ASSUMPTION
+                self.head = head
+                self.body = set()
+                self.body.add("ASMP")
 
         else:
             self.type = Rule.Type.RULE
@@ -22,7 +29,7 @@ class Rule:
         return self.head
         
     def getBody(self) -> {str}:
-        return self.Body
+        return self.body
 
     def get(self):
         return {'head': self.head, 'body': self.body}

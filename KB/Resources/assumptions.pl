@@ -1,5 +1,3 @@
-:- module(assumptions, [penguine/1,sparrow/1]).
+:- module(assumptions, [not/1]).
 
-penguine(tweety).
-penguine(judy).
-sparrow(bob).
+not(not_fly(tweety)).
